@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления | Фитнес-центр</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">🏋️ Фитнес-центр</a>
+            <div class="d-flex align-items-center">
+                <div class="text-white me-3">
+                    <div>{{ username }}</div>
+                    <small>{{ user_role|replace('_', ' ')|title }}</small>
+                </div>
+                <a class="btn btn-outline-light" href="{{ url_for('logout') }}">Выйти</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2 class="mb-4">Доступные таблицы</h2>
+        
+        {% if available_tables %}
+            <div class="row">
+                {% for table in available_tables %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ table_names_ru.get(table, table) }}</h5>
+                                <a href="{{ url_for('show_table', table_name=table) }}" 
+                                   class="btn btn-primary">
+                                    Просмотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Нет доступных таблиц для вашей роли.
+            </div>
+        {% endif %}
+        
+        <div class="mt-4">
+            <a href="/test_db" class="btn btn-secondary">Проверка подключения к БД</a>
+        </div>
+    </div>
+</body>
+</html>

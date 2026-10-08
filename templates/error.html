@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка | Фитнес-центр</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6D83F2;
+            --primary-light: #8EA4FF;
+            --accent-color: #FF7B9C;
+            --background: #F9F7FE;
+            --card-bg: #FFFFFF;
+        }
+        
+        body {
+            background-color: var(--background);
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .error-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(109, 131, 242, 0.1);
+            box-shadow: 0 8px 32px rgba(109, 131, 242, 0.1);
+        }
+        
+        .error-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .error-content {
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .error-code {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn-return {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-return:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(109, 131, 242, 0.3);
+            color: white;
+        }
+        
+        .btn-logout {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-logout:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .info-text {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+        
+        .icon-403 {
+            color: #EF4444;
+        }
+        
+        .icon-404 {
+            color: #F59E0B;
+        }
+        
+        .icon-500 {
+            color: #EF4444;
+        }
+        
+        .icon-default {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <div class="error-card">
+                <div class="error-header">
+                    <div class="logo-icon">🏋️</div>
+                    <h1 class="h4 mb-2">Фитнес-центр</h1>
+                    <p class="mb-0 opacity-90">Система управления</p>
+                </div>
+                
+                <div class="error-content">
+                    <div class="error-icon">
+                        {% if error_code == 403 %}
+                            <i class="bi bi-shield-x icon-403"></i>
+                        {% elif error_code == 404 %}
+                            <i class="bi bi-search icon-404"></i>
+                        {% elif error_code == 500 %}
+                            <i class="bi bi-exclamation-triangle icon-500"></i>
+                        {% else %}
+                            <i class="bi bi-x-octagon icon-default"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="error-code">
+                        {% if error_code %}{{ error_code }}{% else %}Ошибка{% endif %}
+                    </div>
+                    
+                    <h2 class="h4 mb-3">
+                        {% if error_code == 403 %}
+                            Доступ запрещен
+                        {% elif error_code == 404 %}
+                            Страница не найдена
+                        {% elif error_code == 500 %}
+                            Ошибка сервера
+                        {% else %}
+                            Произошла ошибка
+                        {% endif %}
+                    </h2>
+                    
+                    <div class="error-message">
+                        {{ message }}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{{ url_for('dashboard') }}" class="btn-return me-3">
+                            <i class="bi bi-arrow-left me-2"></i>На главную
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="btn-logout">
+                            <i class="bi bi-box-arrow-right me-2"></i>Выйти
+                        </a>
+                    </div>
+                    
+                    <div class="info-text">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Если ошибка повторяется, обратитесь к администратору
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

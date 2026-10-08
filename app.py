@@ -7,14 +7,18 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import enum
+import os
+from dotenv import load_dotenv
 from sqlalchemy import Enum
 import pandas as pd
 from datetime import datetime
 
 # ========== НАСТРОЙКА ПРИЛОЖЕНИЯ ==========
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'FitnessMasterKey2024'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg://postgres:31415@localhost/fitness_center'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-fallback-key')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

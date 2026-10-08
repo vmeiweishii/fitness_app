@@ -37,11 +37,26 @@ class DatabaseManager:
         }
         
         self.role_to_db_user = {
-            "client_basic": {"username": "anna_client_basic", "password": "anna123"},
-            "client_advanced": {"username": "ivan_client_advanced", "password": "ivan123"},
-            "trainer_basic": {"username": "lebedev_trainer_basic", "password": "lebedev123"},
-            "trainer_advanced": {"username": "orlov_trainer_advanced", "password": "orlov123"},
-            "admin": {"username": "admin_fitness", "password": "admin123"}
+            "client_basic": {
+                "username": os.getenv("DB_USER_CLIENT_BASIC"),
+                "password": os.getenv("DB_PASS_CLIENT_BASIC")
+            },
+            "client_advanced": {
+                "username": os.getenv("DB_USER_CLIENT_ADVANCED"),
+                "password": os.getenv("DB_PASS_CLIENT_ADVANCED")
+            },
+            "trainer_basic": {
+                "username": os.getenv("DB_USER_TRAINER_BASIC"),
+                "password": os.getenv("DB_PASS_TRAINER_BASIC")
+            },
+            "trainer_advanced": {
+                "username": os.getenv("DB_USER_TRAINER_ADVANCED"),
+                "password": os.getenv("DB_PASS_TRAINER_ADVANCED")
+            },
+            "admin": {
+                "username": os.getenv("DB_USER_ADMIN"),
+                "password": os.getenv("DB_PASS_ADMIN")
+            }
         }
 
     def get_connection(self, role_name):
